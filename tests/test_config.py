@@ -523,6 +523,10 @@ def test_config_log_level_case_insensitive(log_level: str) -> None:
     config.load()
     assert logging.getLogger("uvicorn.error").level == logging.INFO
 
+def test_config_log_level_invalid_string_raises() -> None:
+    with pytest.raises(ValueError, match="Invalid log level"):
+        Config(app=asgi_app, log_level="invalid")
+
 
 @pytest.mark.filterwarnings("ignore: websockets.legacy is deprecated.*:DeprecationWarning")
 def test_ws_websockets_emits_deprecation_warning() -> None:

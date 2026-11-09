@@ -265,6 +265,14 @@ class Config:
         self.lifespan = lifespan
         self.log_config = log_config
         self.log_level = log_level
+        if isinstance(self.log_level, str):
+            try:
+                LOG_LEVELS[self.log_level.lower()]
+            except KeyError:
+                raise ValueError(
+                    f"Invalid log level: {self.log_level!r}. "
+                    f"Must be one of {sorted(LOG_LEVELS)} or an integer."
+                )
         self.access_log = access_log
         self.use_colors = use_colors
         self.interface = interface
